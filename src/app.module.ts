@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeorm } from "../config/dataSource";
 import { CarbonEmissionFactorsModule } from "./carbonEmissionFactor/carbonEmissionFactors.module";
+import { ProductCarbonFootprintModule } from "./productCarbonFootprint/productCarbonFootprint.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CarbonEmissionFactorsModule } from "./carbonEmissionFactor/carbonEmissi
         configService.getOrThrow("typeorm"),
     }),
     CarbonEmissionFactorsModule,
+    ProductCarbonFootprintModule,
   ],
 })
 export class AppModule {}

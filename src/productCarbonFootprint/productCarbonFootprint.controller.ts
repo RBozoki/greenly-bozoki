@@ -4,7 +4,7 @@ import { ProductCarbonFootprintService } from "./productCarbonFootprint.service"
 import { CreateProductCarbonFootprintDto } from "./dto/create-productCarbonFootprint.dto";
 
 @Controller("product-carbon-footprint")
-export class CarbonEmissionFactorsController {
+export class ProductCarbonFootprintController {
     constructor(
         private readonly productCarbonFootprintService: ProductCarbonFootprintService
     ) {}
