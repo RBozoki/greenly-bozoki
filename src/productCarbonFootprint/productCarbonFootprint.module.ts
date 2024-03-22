@@ -6,7 +6,7 @@ import { ProductCarbonFootprintController } from "./productCarbonFootprint.contr
 import { CarbonEmissionFactor } from "../carbonEmissionFactor/carbonEmissionFactor.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ProductCarbonFootprint, CarbonEmissionFactor])],
+    imports: [TypeOrmModule.forFeature([CarbonEmissionFactor, ProductCarbonFootprint])],
     providers: [ProductCarbonFootprintService],
     controllers: [ProductCarbonFootprintController]
 })
