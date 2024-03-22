@@ -1,23 +1,24 @@
 import { GreenlyDataSource, dataSource } from "../../config/dataSource";
 import { ProductCarbonFootprint } from "./productCarbonFootprint.entity";
 
-let sampleProductCarbonFootprint: ProductCarbonFootprint;
-
 beforeAll(async () => {
     await dataSource.initialize();
-    sampleProductCarbonFootprint = new ProductCarbonFootprint({
-        name: "Burger",
-        emissionCO2eInKg: 1.5,
-    });
 });
 
 beforeEach(async () => {
-    await GreenlyDataSource.cleanDatabase();
+    await dataSource.getRepository(ProductCarbonFootprint).delete({});
+});
+afterAll(async () => {
+    await dataSource.destroy();
 });
 
 describe("ProductCarbonFootprintEntity", () => {
     describe("constructor", () => {
         it("should create a product carbon footprint instance", () => {
+            const sampleProductCarbonFootprint = new ProductCarbonFootprint({
+                name: "Burger",
+                emissionCO2eInKg: 1.5,
+            });
             expect(sampleProductCarbonFootprint.name).toBe("Burger");
             expect(sampleProductCarbonFootprint.emissionCO2eInKg).toBe(1.5);
         });
@@ -40,8 +41,4 @@ describe("ProductCarbonFootprintEntity", () => {
             }).toThrow();
         });
     });
-});
-
-afterAll(async () => {
-    await dataSource.destroy();
 });
