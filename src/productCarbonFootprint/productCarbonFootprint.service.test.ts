@@ -44,6 +44,10 @@ beforeEach(async () => {
     ]);
 });
 
+afterAll(async () => {
+    await dataSource.destroy();
+});
+
 describe("ProductCarbonFootprintService", () => {
     let service: ProductCarbonFootprintService;
     let carbonEmissionFactorRepository: Repository<CarbonEmissionFactor>;
@@ -54,11 +58,22 @@ describe("ProductCarbonFootprintService", () => {
                 ProductCarbonFootprintService,
                 {
                     provide: getRepositoryToken(ProductCarbonFootprint),
-                    useClass: Repository,
+                    useValue: {}, // Replace with necessary mock logic if needed
                 },
                 {
                     provide: getRepositoryToken(CarbonEmissionFactor),
-                    useClass: Repository,
+                    useValue: {
+                        findOne: jest.fn().mockImplementation(({ name, unit }) => {
+                            const factors = [
+                                { name: "ham", unit: "kg", emissionCO2eInKgPerUnit: 3.5, source: "test" },
+                                { name: "cheese", unit: "kg", emissionCO2eInKgPerUnit: 2.1, source: "test" },
+                                { name: "tomato", unit: "kg", emissionCO2eInKgPerUnit: 0.4, source: "test" },
+                                { name: "flour", unit: "kg", emissionCO2eInKgPerUnit: 1.1, source: "test" },
+                                { name: "oliveOil", unit: "kg", emissionCO2eInKgPerUnit: 2.5, source: "test" }
+                            ];
+                            return Promise.resolve(factors.find(factor => factor.name === name && factor.unit === unit));
+                        })
+                    },
                 },
             ],
         }).compile();
