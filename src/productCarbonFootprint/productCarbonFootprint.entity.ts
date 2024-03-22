@@ -16,6 +16,15 @@ export class ProductCarbonFootprint extends BaseEntity {
     })
     emissionCO2eInKg: number;
 
+    sanitize() {
+        if (this.name === "") {
+            throw new Error("Name cannot be empty");
+        }
+        if (this.emissionCO2eInKg < 0) {
+            throw new Error("Emission cannot be negative")
+        }
+    }
+
     constructor(props: {
         name: string;
         emissionCO2eInKg: number;
@@ -24,5 +33,6 @@ export class ProductCarbonFootprint extends BaseEntity {
 
         this.name = props?.name;
         this.emissionCO2eInKg = props?.emissionCO2eInKg;
+        this.sanitize();
     }
 }
