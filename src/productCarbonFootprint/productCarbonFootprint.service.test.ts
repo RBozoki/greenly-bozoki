@@ -58,7 +58,7 @@ describe("ProductCarbonFootprintService", () => {
                 ProductCarbonFootprintService,
                 {
                     provide: getRepositoryToken(ProductCarbonFootprint),
-                    useValue: {}, // Replace with necessary mock logic if needed
+                    useValue: {},
                 },
                 {
                     provide: getRepositoryToken(CarbonEmissionFactor),
